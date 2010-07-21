@@ -8,6 +8,8 @@ var Mapper = (function() {
     var HEIGHT = 500;
     var WIDTH = 500;
 
+    var TILE_CLASS = 'tile';
+
     var BLACK   = '#000000';
     var WHITE   = '#FFFFFF';
     var MAGENTA = '#FF00FF';
@@ -20,7 +22,29 @@ var Mapper = (function() {
     
     var current_tile_img = null;
     var on_canvas = false;
-    var tile_map = []; 
+
+    var tile_map = [];
+
+    /*
+     * Builds a TileMap out of the list of tiles and their placement
+     * on the map.
+     */
+    var TileMap = function() {
+        this.tile_set = [];         // a list of the entire tile set
+        this.tile_map = tile_map;   // a list of the tiles used
+
+        walk(document, function(node) {
+            if (node.className === TILE_CLASS) {
+                tile_set.push(node.getAttribute('src'));
+            }
+        });
+
+        return {
+            map_export : function() {
+
+            }
+        }
+    }; 
 
     var Tile = function(x, y, url) {
         if (this instanceof Tile) {
@@ -82,7 +106,12 @@ var Mapper = (function() {
         for (var i = 0; i < tile_map.length; i++) {
             ctx.drawImage(tile_map[i].img, tile_map[i].x, tile_map[i].y, 50, 50);
         }
-                
+        
+        // This would show the tile inside of the cursor instead of just a strokeRect
+        //if (current_tile_img !== null) {
+        //    ctx.drawImage(current_tile_img, Cursor.x(), Cursor.y(), 50, 50);
+        //}
+
         ctx.strokeStyle = MAGENTA;
         ctx.strokeRect(Cursor.x(), Cursor.y(), 50, 50);
     
@@ -217,6 +246,7 @@ var Mapper = (function() {
                  */
                 x_grid = 0;
                 y_grid = 0;
+                
                 if (posx < 50) {
                     x_grid = 0;
                 } else if (posx >= 50 && posx < 100) {
@@ -264,6 +294,9 @@ var Mapper = (function() {
                 Cursor.x(x_grid);
                 Cursor.y(y_grid);
             }
+
+            // Test TileMap
+            var tm = TileMap();
 
             refresh();
         },
