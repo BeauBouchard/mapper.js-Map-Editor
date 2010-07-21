@@ -61,6 +61,9 @@ var Mapper = (function() {
         };
     })();
 
+    /* A utility function for walking the DOM tree and applying 
+     * a given function on each node.
+     */
     var walk = function(node, func) {
         func(node);
         node = node.firstChild;
@@ -151,16 +154,18 @@ var Mapper = (function() {
         load : function() {
             console.log('Mapper loaded.');
         
-            //walk(document, function(node){
-            //    if (node.nodeName === 'IMG') {
-            //        node.onselectstart = function(){return false;};
-            //        node.ondragstart = function(){return false;};
-            //    }
-            //});
-        
             // TODO: It will probably be more effective to use a transparent image here
             document.onselectstart = function(){return false;};
             document.ondragstart = function(){return false;};
+
+            // get all of the tile images, and put them into the tile_map
+            walk(document, 
+                function(node) {
+                    if (node.className !== undefined) {
+                        console.log(node.className);
+                    }
+                }
+            );
 
             canvas = document.getElementById(CANVAS_TARGET);
 
