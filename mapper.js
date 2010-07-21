@@ -61,8 +61,13 @@ var Mapper = (function() {
         };
     })();
 
-    function make_nosel() {
-        alert(sup);
+    var walk = function(node, func) {
+        func(node);
+        node = node.firstChild;
+        while (node) {
+            walk(node, func);
+            node = node.nextSibling;
+        }
     }
 
     var refresh = function() {
@@ -146,6 +151,17 @@ var Mapper = (function() {
         load : function() {
             console.log('Mapper loaded.');
         
+            //walk(document, function(node){
+            //    if (node.nodeName === 'IMG') {
+            //        node.onselectstart = function(){return false;};
+            //        node.ondragstart = function(){return false;};
+            //    }
+            //});
+        
+            // TODO: It will probably be more effective to use a transparent image here
+            document.onselectstart = function(){return false;};
+            document.ondragstart = function(){return false;};
+
             canvas = document.getElementById(CANVAS_TARGET);
 
             if (canvas.getContext) {
