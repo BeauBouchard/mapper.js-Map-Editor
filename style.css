@@ -1,0 +1,38 @@
+html {
+    margin: 0;
+    padding: 0;
+    color: #000;
+    background-color: #FFF;
+}
+
+canvas {
+    position: relative;
+}
+
+img {
+    height: 50px;
+    width: 50px;
+    border: 0px solid #FFF;
+}
+
+div#universe {
+    margin: 0 auto;
+    height: 500px;
+    overflow: hidden;
+}
+
+div#mapdiv {
+    background-color: #FF0000;
+    float: left;
+}
+
+div#controldiv {
+    position: relative;
+    float: left;
+    padding: 20px;
+    text-align: center;
+    overflow: auto;
+    width: 250px;
+    height: 100%;
+    background-color: #FFF;
+}

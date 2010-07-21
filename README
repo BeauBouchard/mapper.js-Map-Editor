@@ -1,0 +1,9 @@
+A lightweight Javascript and PHP tile map editor for game development.
+
+Mapper is a tool for creating maps for 2-D tile based games, in the style 
+of 2-D classics such as Mario and Zelda.
+
+Features:
+* Simple and intuitive interface
+* Upload your own tile sets
+* Export entire maps in JSON format for easy use in web games
