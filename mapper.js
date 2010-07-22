@@ -1,3 +1,16 @@
+/*
+ * mapper.js
+ * An online tile-map creator for making 2D game maps.
+ *
+ * (c) Artificial Laboratories 2010
+ * artificial.laboratories@gmail.com
+ *
+ * This software is completely free to use, for good or evil.
+ * If you find a use for it, you're requested (but not required)
+ * to let me know about it.
+ *
+ */
+
 window.console = window.console || {log:function(){}};
 
 var Mapper = (function() {
@@ -29,22 +42,53 @@ var Mapper = (function() {
      * Builds a TileMap out of the list of tiles and their placement
      * on the map.
      */
-    var TileMap = function() {
+    var TileMap = (function() {
         this.tile_set = [];         // a list of the entire tile set
-        this.tile_map = tile_map;   // a list of the tiles used
-
-        walk(document, function(node) {
-            if (node.className === TILE_CLASS) {
-                tile_set.push(node.getAttribute('src'));
-            }
-        });
 
         return {
+            
             map_export : function() {
+                var max_row = 0;
+                var max_col = 0;
+        
+                // Create a current tileset from the DOM
+                walk(document, function(node) {
+                    if (node.className === TILE_CLASS) {
+                        tile_set.push(node.getAttribute('src'));
+                    }
+                });
 
+                for (var i = 0; i < tile_map.length; i++) {
+
+                    if (tile_map[i].x >= max_col) {
+                        max_col = tile_map[i].x;
+                    }
+                    if (tile_map[i].y >= max_row) {
+                        max_row = tile_map[i].y;
+                    }
+                }
+
+
+
+                //DEBUG
+                // TODO: I'm hardcoding the value 50 for now, but it will just
+                // be whatever the max height or width is divided by the number
+                // of rows or columns in each.  Mine is 500x500 w/ 10 rows/cols
+                if (max_row === 0 && max_col === 0) {
+                    max_row -= 1; 
+                    max_col -= 1;
+                
+                    console.log('The map will be ' + 0 + ' rows');
+                    console.log('and ' + 0 + ' columns');
+                }
+                
+                else{
+                    console.log('The map will be ' + (max_row / 50 + 1) + ' rows');
+                    console.log('and ' + (max_col / 50 + 1) + ' columns');
+                }
             }
         }
-    }; 
+    })(); 
 
     var Tile = function(x, y, url) {
         if (this instanceof Tile) {
@@ -145,6 +189,9 @@ var Mapper = (function() {
                     console.log('added image ' 
                             + current_tile_img.getAttribute('src') + ' to the map at (' 
                             + x_grid + ', ' + y_grid + ')'); 
+                
+                    TileMap.map_export();
+
                     /* TODO: This should really make sure that a tile with the
                      * same coordinates doesn't exist in the array, but since
                      * my draw method just goes through the array sequentially
@@ -239,7 +286,7 @@ var Mapper = (function() {
                     posy = e.layerY;
                 
                 }
-                console.log('(' + posx + ', ' + posy + ')');
+                //console.log('(' + posx + ', ' + posy + ')');
                 
                 /* This seems really dumb, but it works for now, and is
                  *  straightforward at least.
@@ -250,45 +297,45 @@ var Mapper = (function() {
                 if (posx < 50) {
                     x_grid = 0;
                 } else if (posx >= 50 && posx < 100) {
-                    x_grid = 49;
+                    x_grid = 50;
                 } else if (posx >= 100 && posx < 150) {
-                    x_grid = 99;
+                    x_grid = 100;
                 } else if (posx >= 150 && posx < 200) {
-                    x_grid = 149;
+                    x_grid = 150;
                 } else if (posx >= 200 && posx < 250) {
-                    x_grid = 199;
+                    x_grid = 200;
                 } else if (posx >= 250 && posx < 300) {
-                    x_grid = 249;
+                    x_grid = 250;
                 } else if (posx >= 300 && posx < 350) {
-                    x_grid = 299;
+                    x_grid = 300;
                 } else if (posx >= 350 && posx < 400) {
-                    x_grid = 349;
+                    x_grid = 350;
                 } else if (posx >= 400 && posx < 450) {
-                    x_grid = 399;
+                    x_grid = 400;
                 } else if (posx >= 450 && posx < 500) {
-                    x_grid = 449;
+                    x_grid = 450;
                 }
                 
                 if (posy < 50) {
                     y_grid = 0;
                 } else if (posy >= 50 && posy < 100) {
-                    y_grid = 49;
+                    y_grid = 50;
                 } else if (posy >= 100 && posy < 150) {
-                    y_grid = 99;
+                    y_grid = 100;
                 } else if (posy >= 150 && posy < 200) {
-                    y_grid = 149;
+                    y_grid = 150;
                 } else if (posy >= 200 && posy < 250) {
-                    y_grid = 199;
+                    y_grid = 200;
                 } else if (posy >= 250 && posy < 300) {
-                    y_grid = 249;
+                    y_grid = 250;
                 } else if (posy >= 300 && posy < 350) {
-                    y_grid = 299;
+                    y_grid = 300;
                 } else if (posy >= 350 && posy < 400) {
-                    y_grid = 349;
+                    y_grid = 350;
                 } else if (posy >= 400 && posy < 450) {
-                    y_grid = 399;
+                    y_grid = 400;
                 } else if (posy >= 450 && posy < 500) {
-                    y_grid = 449;
+                    y_grid = 450;
                 }
                 
                 Cursor.x(x_grid);
@@ -296,11 +343,11 @@ var Mapper = (function() {
             }
 
             // Test TileMap
-            var tm = TileMap();
+            TileMap.map_export();
 
             refresh();
         },
-       
+      
         /*--------------------------------
          * Don't edit below this comment.
          *-------------------------------*/
