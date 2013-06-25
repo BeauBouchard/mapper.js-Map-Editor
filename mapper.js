@@ -291,52 +291,28 @@ var Mapper = (function() {
                 /* This seems really dumb, but it works for now, and is
                  *  straightforward at least.
                  */
+                 // I think you can also do some sort of /50, with mod % 50 to just check the remainder
                 x_grid = 0;
                 y_grid = 0;
+                var end = 500;
+                var jump = 50;
+                var last = 0;
                 
-                if (posx < 50) {
-                    x_grid = 0;
-                } else if (posx >= 50 && posx < 100) {
-                    x_grid = 50;
-                } else if (posx >= 100 && posx < 150) {
-                    x_grid = 100;
-                } else if (posx >= 150 && posx < 200) {
-                    x_grid = 150;
-                } else if (posx >= 200 && posx < 250) {
-                    x_grid = 200;
-                } else if (posx >= 250 && posx < 300) {
-                    x_grid = 250;
-                } else if (posx >= 300 && posx < 350) {
-                    x_grid = 300;
-                } else if (posx >= 350 && posx < 400) {
-                    x_grid = 350;
-                } else if (posx >= 400 && posx < 450) {
-                    x_grid = 400;
-                } else if (posx >= 450 && posx < 500) {
-                    x_grid = 450;
+                for (var i=0;i<=end;i+50){
+                    last = i;
+                    if (posx < (i+50)) {
+                        x_grid = last;
+                    }
                 }
                 
-                if (posy < 50) {
-                    y_grid = 0;
-                } else if (posy >= 50 && posy < 100) {
-                    y_grid = 50;
-                } else if (posy >= 100 && posy < 150) {
-                    y_grid = 100;
-                } else if (posy >= 150 && posy < 200) {
-                    y_grid = 150;
-                } else if (posy >= 200 && posy < 250) {
-                    y_grid = 200;
-                } else if (posy >= 250 && posy < 300) {
-                    y_grid = 250;
-                } else if (posy >= 300 && posy < 350) {
-                    y_grid = 300;
-                } else if (posy >= 350 && posy < 400) {
-                    y_grid = 350;
-                } else if (posy >= 400 && posy < 450) {
-                    y_grid = 400;
-                } else if (posy >= 450 && posy < 500) {
-                    y_grid = 450;
+                last = 0;
+                for (var i=0;i<=end;i+50){
+                    last = i;
+                    if (posy < (i+50)) {
+                        y_grid = last;
+                    }
                 }
+                
                 
                 Cursor.x(x_grid);
                 Cursor.y(y_grid);
